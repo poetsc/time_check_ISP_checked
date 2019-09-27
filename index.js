@@ -24,6 +24,7 @@ function checkIP(area_type) {
     }
 
     return new Promise((resolve, reject) => {
+	const request_time = (new Date()).toLocaleString();
         https.get(options, (res) => {
             if (res.statusCode !== 200) {
                 reject({
@@ -40,6 +41,7 @@ function checkIP(area_type) {
             res.on('end', () => {
                 try {
                     result = JSON.parse(result);
+		    result.time = request_time;
                     resolve(result);
                 } catch (e) {
                     reject({
